@@ -7,8 +7,10 @@ module Screencap
         url: url,
         output: path
       }.merge(args).collect {|k,v| "#{k}=#{v}"}
-      puts RASTERIZE.to_s, params
-      Phantomjs.run(RASTERIZE.to_s, *params)
+
+      output = Phantomjs.run(RASTERIZE.to_s, *params)
+
+      puts output
     end
 
     def quoted_args(args)
