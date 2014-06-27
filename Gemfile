@@ -4,4 +4,8 @@ source 'https://rubygems.org'
 gem 'guard'
 gem 'guard-rspec'
 gem 'guard-bundler'
+
 gemspec
+
+gem 'friendly_ghost',
+    github: 'elpic/friendly_ghost'

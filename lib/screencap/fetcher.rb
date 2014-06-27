@@ -21,7 +21,7 @@ module Screencap
     end
 
     def raster(*args)
-      Screencap::Phantom.rasterize(*args)
+      Screencap::Casper.rasterize(*args)
     end
 
     def clean_filename

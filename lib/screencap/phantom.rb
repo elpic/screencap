@@ -1,27 +1,23 @@
 module Screencap
-  class Phantom
+  class Casper
     RASTERIZE = SCREENCAP_ROOT.join('screencap', 'raster.js')
 
-    def self.rasterize(url, path, args = {})
-      params = {
-        url: url,
-        output: path
-      }.merge(args).collect {|k,v| "#{k}=#{v}"}
+    class << self
 
-      output = Phantomjs.run(RASTERIZE.to_s, *params)
+      def rasterize(url, path, args = {})
+        params = {
+          url: url,
+          output: path
+        }.merge(args).collect {|k,v| "--#{k}=#{v}"}
 
-      puts output
-    end
+        runner = FriendlyGhost::Runner.new
 
-    def quoted_args(args)
-      args.map{|x| quoted_arg(x)}
-    end
+        runner.command "#{RASTERIZE.to_s} #{params.join(' ')}"
 
-    def quoted_arg(arg)
-      return arg if arg.starts_with?("'") && arg.ends_with?("'")
-      arg = "'" + arg unless arg.starts_with?("'")
-      arg = arg + "'" unless arg.ends_with?("'")
-      arg
+        puts runner.process.out
+        puts runner.process.err
+      end
+
     end
   end
 end
